@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <!--<link rel="shortcut icon" href="images/favicon.ico" />-->
+    
+    <link rel="stylesheet" href="style.css">
+    <title>simple-grid-engine</title>   
+  </head>
+  <body>    
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <div
+      id="gridBody"
+      tabindex="0"
+      v-on:keyup.left="left"
+      v-on:keyup.up="up"
+      v-on:keyup.down="down"
+      v-on:keyup.right="right">
+      <div class="grid">
+        <div 
+          class="player"
+          v-bind:style="{transform: 'translate(' + player.x * gridSize + 'px,' + player.y * gridSize + 'px)'}"></div>          
+        <div class="row" v-for="i in board">
+          <div class="cell" v-for="j in i"></div>
+        </div>        
+      </div>      
+    </div>    
+          
+    <script src="script.js"></script>
+  </body>
+</html>
