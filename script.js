@@ -28,9 +28,25 @@ new Vue({
         gridSize: gridSize
     },
     mounted(){
-        
+        const target = document.querySelector(".player");
+        target.addEventListener('touchstart', this.onStart);
+        target.addEventListener('touchmove', this.onMove);
+        target.addEventListener('touchend', this.onEnd);
+
+        target.addEventListener('mousedown', this.onStart);
+        target.addEventListener('mousemove', this.onMove);
+        target.addEventListener('mouseup', this.onEnd);
     },
     methods: {
+        onStart(e){
+            console.log(e);
+        },
+        onMove(e){
+            console.log(e);
+        },
+        onEnd(e){
+            console.log(e);
+        },
         left(){
             this.move(Math.max(0, this.player.x - 1), this.player.y);
         },
