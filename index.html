@@ -20,7 +20,10 @@
       <div class="grid">
         <div 
           class="player"
-          v-bind:style="{transform: 'translate(' + player.x * gridSize + 'px,' + player.y * gridSize + 'px)'}"></div>          
+          v-bind:style="{transform: 'translate(' + player.x * gridSize + 'px,' + player.y * gridSize + 'px)'}"></div>    
+
+        <div class="player-mask"></div>      
+          
         <div class="row" v-for="i in board">
           <div class="cell" v-for="j in i"></div>
         </div>        

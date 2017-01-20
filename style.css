@@ -41,10 +41,22 @@ body {
 
 .player{
     position: absolute;
+    z-index: 2;
     background: black;
     border-radius: 50%;
     height: var(--player-size);
     width: var(--player-size);
     margin: var(--player-margin);
     transition: transform 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.player-mask{
+    position: fixed;
+    z-index: 1;
+    background: rgba(0,0,0,.5);
+    border-radius: 50%;
+    height: var(--player-size);
+    width: var(--player-size);
+    margin: var(--player-margin);
+    top:0;
+    left:0;
 }

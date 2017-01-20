@@ -25,27 +25,39 @@ new Vue({
             x: 0,
             y: 0
         },
-        gridSize: gridSize
+        mask: null,
+        gridSize: gridSize,
+        dragging: false,        
     },
-    mounted(){
-        const target = document.querySelector(".player");
-        target.addEventListener('touchstart', this.onStart);
-        target.addEventListener('touchmove', this.onMove);
-        target.addEventListener('touchend', this.onEnd);
+    mounted(){        
+        document.addEventListener('touchstart', this.onStart);
+        document.addEventListener('touchmove', this.onMove);
+        document.addEventListener('touchend', this.onEnd);
 
-        target.addEventListener('mousedown', this.onStart);
-        target.addEventListener('mousemove', this.onMove);
-        target.addEventListener('mouseup', this.onEnd);
+        document.addEventListener('mousedown', this.onStart);
+        document.addEventListener('mousemove', this.onMove);
+        document.addEventListener('mouseup', this.onEnd);
+
+        this.mask = document.querySelector(".player-mask");
     },
     methods: {
-        onStart(e){
-            console.log(e);
+        onStart(e){      
+            if(!e.target.classList.contains("player")){
+                return;
+            }      
+
+            this.dragging = true;
         },
         onMove(e){
-            console.log(e);
+            if(!this.dragging){
+                return;
+            }   
+            
+            this.mask.style["transform"] = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;                            
         },
-        onEnd(e){
-            console.log(e);
+        onEnd(e){            
+            this.dragging = false;            
+            this.mask.style["transform"] = `none`;          
         },
         left(){
             this.move(Math.max(0, this.player.x - 1), this.player.y);
