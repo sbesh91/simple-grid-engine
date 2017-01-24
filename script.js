@@ -27,7 +27,9 @@ new Vue({
         },
         mask: null,
         gridSize: gridSize,
-        dragging: false,        
+        dragging: false,  
+        boundingBox: null,
+        currentHover: null 
     },
     mounted(){        
         document.addEventListener('touchstart', this.onStart);
@@ -39,8 +41,16 @@ new Vue({
         document.addEventListener('mouseup', this.onEnd);
 
         this.mask = document.querySelector(".player-mask");
+        this.boundingBox = document.querySelector(".grid").getBoundingClientRect();
     },
     methods: {
+        onHover(e){
+            if(!this.dragging){
+                return;
+            }
+            console.log("hover",e);
+            this.currentHover = e;
+        },
         onStart(e){      
             if(!e.target.classList.contains("player")){
                 return;
@@ -52,10 +62,13 @@ new Vue({
             if(!this.dragging){
                 return;
             }   
-            
-            this.mask.style["transform"] = `translate(${e.clientX - 20}px, ${e.clientY - 20}px)`;                            
+            const x = e.clientX - this.boundingBox.left - 20;
+            const y = e.clientY - this.boundingBox.top - 20;
+            this.mask.style["transform"] = `translate(${x}px, ${y}px)`;                            
         },
-        onEnd(e){            
+        onEnd(e){          
+            console.log(this.currentHover);
+            this.currentHover = null;  
             this.dragging = false;            
             this.mask.style["transform"] = `none`;          
         },

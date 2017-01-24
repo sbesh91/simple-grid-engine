@@ -19,13 +19,17 @@
       v-on:keyup.right="right">
       <div class="grid">
         <div 
-          class="player"
+          class="player"          
           v-bind:style="{transform: 'translate(' + player.x * gridSize + 'px,' + player.y * gridSize + 'px)'}"></div>    
 
-        <div class="player-mask"></div>      
+        <div class="player-mask" v-bind:class="{ active : dragging }"></div>      
           
         <div class="row" v-for="i in board">
-          <div class="cell" v-for="j in i"></div>
+          <div 
+            class="cell"
+            v-for="j in i" 
+            v-bind:data-info="j"
+            v-on:mouseover="onHover"></div>
         </div>        
       </div>      
     </div>    
