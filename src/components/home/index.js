@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import Player from './player.js';
 import style from './style';
 
 export default class Home extends Component {
@@ -14,7 +15,7 @@ export default class Home extends Component {
 			board: []
 		};			
 		this.state.board = this.buildBoard(this.state.rows,this.state.cols);		
-	}
+	};
 	buildBoard(rows,cols){
 		let board = [];		
 		for(let i = 0; i < rows; i++){
@@ -28,10 +29,11 @@ export default class Home extends Component {
 			board.push(row);
 		}
 		return board;
-	}
+	};
 	render() {
 		return (
 			<div class={style.home}>
+				<Player PlayerSize={this.state.playerSize} PlayerMargin={this.state.playerMargin}/>
 				<div class={style.board}>
 					{
 						this.state.board.map(i => (
@@ -39,6 +41,7 @@ export default class Home extends Component {
 								{
 									i.map(j => (
 										<div 
+											onMouseUp={this.handle}
 											class={style.cell}
 											style={{
 												height:this.state.gridSize,

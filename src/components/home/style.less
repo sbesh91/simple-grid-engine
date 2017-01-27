@@ -1,7 +1,7 @@
 @import '~style/helpers';
 
 .home {
-	padding: 56px 20px;
+	//padding: 56px 20px;
 	min-height: 100vh;
 	min-width: 100vw;	
 	display: flex;
@@ -23,4 +23,26 @@
 .cell{
 	border:1px solid rgba(0,0,0,0.87);    
     display: flex;
+}
+
+.player {
+	box-sizing: border-box;
+	position: absolute;
+	background: #CCC;	
+	border: 1px solid #AAA;
+	border-radius: 50%;
+	border-radius: 3px;
+	user-select: none;
+	user-drag: none;
+	text-align: center;
+	will-change: transform;
+	transition: box-shadow 150ms ease, background-color 150ms ease;
+	z-index: 1;
+	overflow: hidden;
+	
+	&[updated] {
+		transition: none;
+		box-shadow: 0 0 25px rebeccapurple;
+		background-color: lighten(rebeccapurple, 50%);
+	}
 }
