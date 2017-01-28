@@ -11,7 +11,7 @@ const EVENTS = [['mousemove','mouseup'], ['touchmove','touchend']]
 export default class Player extends Component {
 	constructor(props){
 		super(props);		
-		//todo when playerlist is made it should pass selected el in grid as prop
+		
 		this.state = {
 			x: 0,
 			y: 0,

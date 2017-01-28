@@ -73,6 +73,7 @@ export default class Home extends Component {
 						))												
 					}	
 					{
+						//todo find a way to render this after grid
 						this.state.players.map(i =>(
 							<Player PlayerSize={this.state.playerSize} PlayerMargin={this.state.playerMargin} Selected={i}/>	
 						))
