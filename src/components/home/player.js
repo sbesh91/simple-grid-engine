@@ -10,15 +10,33 @@ const EVENTS = [['mousemove','mouseup'], ['touchmove','touchend']]
 
 export default class Player extends Component {
 	constructor(props){
-		super(props);
+		super(props);		
+		//todo when playerlist is made it should pass selected el in grid as prop
 		this.state = {
 			x: 0,
 			y: 0,
 			playerMargin: props.PlayerMargin,
 			playerSize: props.PlayerSize,
+			playerOffset: (props.PlayerMargin + props.PlayerSize * 2) / 2,
 			dragging: false
-		};
+		};	
+		
+		if(this.props.Selected){
+			this.snap(document.getElementById(this.props.Selected));
+		} else {				
+			this.snap(document.getElementById("0x0"));
+		}
 	};
+	snap(el){
+		if(el){
+			const rect = el.getBoundingClientRect();
+			this.setState({
+				x: rect.left,
+				y: rect.top,
+				dragging:false
+			});
+		}
+	}
 	start = e => {
 		let [move,end] = this.evt = EVENTS[e.type==='touchstart'?1:0];		
 		this.setState({
@@ -26,6 +44,11 @@ export default class Player extends Component {
 		});
 		addEventListener(move, this.move);
 		addEventListener(end, this.end);
+		this.base.setAttribute('dragging', true);	
+		this.offset = {
+			x: 0,
+			y: 0
+		};
 	};
 	move = e => {
 		let c = coords(e);
@@ -44,22 +67,33 @@ export default class Player extends Component {
 		let [move,end] = this.evt;
 		removeEventListener(move, this.move);
 		removeEventListener(end, this.end);
+		
+		const x = this.state.x + this.offset.x;
+		const y = this.state.y + this.offset.y;
 
-		if (this.offset) {
+		const xOff = x + this.state.playerOffset;
+		const yOff = y + this.state.playerOffset;			 
+
+		this.base.style.pointerEvents = "none";			
+
+		//element to snap player to
+		const el = document.elementFromPoint(xOff,yOff);
+
+		if(el.dataset && el.dataset.snap){
+			this.snap(el);
+		} else {
 			this.setState({
-				x: this.state.x + this.offset.x,
-				y: this.state.y + this.offset.y,
-				dragging:false
-			});
+				x: this.state.x,
+				y: this.state.y,
+				dragging: false
+			})
 		}
+
+		this.base.removeAttribute('dragging');	
+		this.base.style.pointerEvents = "auto";											
 		
 		this.down = this.offset = null;
-	};
-	// this is just for the demo: shows when we have re-rendered:
-	componentDidUpdate() {
-		this.base.setAttribute('updated', true);
-		setTimeout( () => this.base.removeAttribute('updated'), 150);
-	}
+	};	
 	render({ }, { x, y }) {
   	return (
     <div class={style.player} 

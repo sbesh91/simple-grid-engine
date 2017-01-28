@@ -12,7 +12,6 @@
 
 .board{
 	display: inline-block;    
-    position: relative;
 	margin:auto;
 }
 
@@ -30,18 +29,15 @@
 	position: absolute;
 	background: #CCC;	
 	border: 1px solid #AAA;
-	border-radius: 50%;
+	border-radius: 50%;	
 	user-select: none;
 	user-drag: none;
 	text-align: center;
 	will-change: transform;
-	transition: box-shadow 150ms ease, background-color 150ms ease;
+	transition: box-shadow 200ms ease-in;
 	z-index: 1;
 	overflow: hidden;
-	
-	&[updated] {
-		transition: none;
-		box-shadow: 0 0 25px rebeccapurple;
-		background-color: lighten(rebeccapurple, 50%);
+	&[dragging] {		
+		box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.4);		
 	}
 }
