@@ -19,14 +19,15 @@ export default class Player extends Component {
 			playerSize: props.PlayerSize,
 			playerOffset: (props.PlayerMargin + props.PlayerSize * 2) / 2,
 			dragging: false
-		};	
-		
-		if(this.props.Selected){
+		};			
+	};
+	componentDidMount(){
+        if(this.props.Selected){
 			this.snap(document.getElementById(this.props.Selected));
 		} else {				
 			this.snap(document.getElementById("0x0"));
 		}
-	};
+    }
 	snap(el){
 		if(el){
 			const rect = el.getBoundingClientRect();
@@ -96,7 +97,7 @@ export default class Player extends Component {
 	};	
 	render({ }, { x, y }) {
   	return (
-    <div class={style.player} 
+    	<div class={style.player} 
 			style={{
 				left: x,
 				top: y,

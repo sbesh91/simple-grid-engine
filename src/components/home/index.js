@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
-import Player from './player.js';
+import Players from './players.js';
+import Board from './board.js';
 import style from './style';
 
 export default class Home extends Component {
@@ -23,7 +24,7 @@ export default class Home extends Component {
 		let players = [];
 
 		for(let i = 0; i < count; i++){
-			players.push(`${this.getRandomInt(rows,cols)}x${this.getRandomInt(rows,cols)}`);
+			players.push(`${this.getRandomInt(0,rows)}x${this.getRandomInt(0,cols)}`);
 		}
 
 		return players;
@@ -52,33 +53,13 @@ export default class Home extends Component {
 		// todo give players vision of others and access to only ones provided by admin
 		return (
 			<div class={style.home}>										
-				<div class={style.board}>				
-					{
-						this.state.board.map(i => (
-							<div class={style.row}>
-								{
-									i.map(j => (
-										<div 
-											onMouseUp={this.handle}
-											data-snap="true"
-											id={`${j.x}x${j.y}`}
-											class={style.cell}
-											style={{
-												height:this.state.gridSize,
-												width:this.state.gridSize
-											}}></div>
-									))
-								}
-							</div>
-						))												
-					}	
-					{
-						//todo find a way to render this after grid
-						this.state.players.map(i =>(
-							<Player PlayerSize={this.state.playerSize} PlayerMargin={this.state.playerMargin} Selected={i}/>	
-						))
-					}				
-				</div>				
+				<Board 
+					GridSize={this.state.gridSize}
+					Board={this.state.board}/>			
+				<Players 
+					Players={this.state.players}
+					PlayerMargin={this.state.playerMargin}
+					PlayerSize={this.state.playerSize}/>
 			</div>
 		);
 	}
