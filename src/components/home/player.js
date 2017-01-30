@@ -18,12 +18,14 @@ export default class Player extends Component {
 			playerMargin: props.PlayerMargin,
 			playerSize: props.PlayerSize,
 			playerOffset: (props.PlayerMargin + props.PlayerSize * 2) / 2,
-			dragging: false
+			dragging: false,
+			selected: this.props.Selected
 		};			
 	};
 	componentDidMount(){
+		//bind to resize and fire this
         if(this.props.Selected){
-			this.snap(document.getElementById(this.props.Selected));
+			this.snap(document.getElementById(this.state.selected));
 		} else {				
 			this.snap(document.getElementById("0x0"));
 		}
@@ -34,7 +36,8 @@ export default class Player extends Component {
 			this.setState({
 				x: rect.left,
 				y: rect.top,
-				dragging:false
+				dragging:false,
+				selected: el.id
 			});
 		}
 	}
